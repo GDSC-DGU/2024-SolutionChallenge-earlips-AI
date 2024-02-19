@@ -1,161 +1,3 @@
-from fastapi import FastAPI, File, UploadFile
-
-# 서버 올리기
-app = FastAPI()
-
-# 음절 교정
-@app.post("/study/syllable")
-async def syllable(syll: str, file: UploadFile = File(...)):
-
-    # 녹음 파일 객체
-    name = file.filename
-    sep_name = name.split(".")
-
-    aac_to_mp3(file, sep_name[0], "/mp3/")
-
-    audio_path = "/mp3/{}.mp3".format(sep_name[0])
-
-    #모델에 넣어준다.
-    result = speech_to_text(audio_path)
-
-    #틀린거 찾기
-    similarity, user_text = find_wrong_index(result, syll, option=0)#유사도, 사용자 발음
-
-    dic = {"pronunciation" : user_text, "similarity" : similarity }
-
-    #서버에 올라간 데이터 삭제하기.
-
-    return dic
-
-
-# 단어 교정
-@app.post("/study/word")
-async def word(word: str, file: UploadFile = File(...)):
-
-    # 녹음 파일 객체
-    name = file.filename
-    sep_name = name.split(".")
-
-    aac_to_mp3(file, sep_name[0], "/mp3/")
-
-    audio_path = "/mp3/{}.mp3".format(sep_name[0])
-
-    # 모델에 넣어준다.
-    result = speech_to_text(audio_path)
-
-    # 틀린거 찾기
-    similarity, user_text = find_wrong_index(result, syll, option=1)  # 유사도, 사용자 발음
-
-    dic = {"pronunciation" : user_text, "similarity" : similarity }
-
-    # 서버에 올라간 데이터 삭제하기.
-
-    return dic
-
-
-# 문장 교정
-@app.post("/study/sentence")
-async def sentence(sen: str, file: UploadFile = File(...)):
-
-    # 녹음 파일 객체
-    name = file.filename
-    sep_name = name.split(".")
-
-    aac_to_mp3(file, sep_name[0], "/mp3/")
-
-    audio_path = "/mp3/{}.mp3".format(sep_name[0])
-
-    # 모델에 넣어준다.
-    result = speech_to_text(audio_path)
-
-    # 틀린거 찾기
-    wrong_list_idx, user_word_list, gt_word_list = find_wrong_index(result, syll, option=2)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 정답 값 단어 리스트
-    db, var = calculate_audio_maxdB_and_var(audio_path) #목소리 크기(0~100), var(1 or -1)
-    speed = compare_speed(result, sen, option = 0) #speed(0, 0.5, 1, 1.5, 2)
-
-    dic = {"sentence_word" : gt_word_list, "user_word" : user_word_list, "wrong" : wrong_list_idx, "loudness" : db, "variance" : var, "speed" : speed}
-
-    #서버 올린 데이터 삭제하기.
-
-    return dic
-
-
-# 문단 교정
-@app.post("/study/paragraph")
-async def paragraph(para: str, file: UploadFile = File(...)):
-
-    # 녹음 파일 객체
-    name = file.filename
-    sep_name = name.split(".")
-
-    aac_to_mp3(file, sep_name[0], "/mp3/")
-
-    audio_path = "/mp3/{}.mp3".format(sep_name[0])
-
-    # 모델에 넣어준다.
-    result = speech_to_text(audio_path)
-
-    wrong_list_idx, user_word_list, gt_word_list = find_wrong_index(result, para, option = 2)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 정답 값 단어 리스트
-    paragraph_sentence = paragraph_to_sentence_list2(para)
-    user_sentence = paragraph_to_sentence_list2(result)
-    speed = compare_speed(result, para, option = 1)
-
-    dic = {"paragraph_word": gt_word_list, "user_word": user_word_list, "paragraph_sentence": paragraph_sentence, "user_sentence": user_sentence, "wrong": wrong_list_idx, "speed": speed}
-
-    # 서버 올린 데이터 삭제하기
-
-    return dic
-
-
-# 대본 학습
-@app.post("/script")
-async def script(scr: str, file: UploadFile = File(...)):
-    # 녹음 파일 객체
-    name = file.filename
-    sep_name = name.split(".")
-
-    aac_to_mp3(file, sep_name[0], "/mp3/")
-
-    audio_path = "/mp3/{}.mp3".format(sep_name[0])
-
-    # 모델에 넣어준다.
-    result = speech_to_text(audio_path)
-
-    wrong_list_idx, user_word_list, gt_word_list = find_wrong_index(result, para,
-                                                                    option=2)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 정답 값 단어 리스트
-    paragraph_sentence = paragraph_to_sentence_list2(para)
-    user_sentence = paragraph_to_sentence_list2(result)
-    speed = compare_speed(result, para, option=1)
-
-    dic = {"paragraph_word": gt_word_list, "user_word": user_word_list, "paragraph_sentence": paragraph_sentence, "user_sentence": user_sentence, "wrong": wrong_list_idx, "speed": speed}
-
-    # 서버 올린 데이터 삭제하기
-
-    return dic
-
-
-# 실시간 발음 테스트
-@app.post("/real_time")
-async def script(file: UploadFile = File(...)):
-
-    # 녹음 파일 객체
-    name = file.filename
-    sep_name = name.split(".")
-
-    aac_to_mp3(file, sep_name[0], "/mp3/")
-
-    audio_path = "/mp3/{}.mp3".format(sep_name[0])
-
-    # 모델에 넣어준다.
-    result = speech_to_text(audio_path)
-
-    dic = {"user_total" : result['text']}
-
-    # 서버 올린 데이터 삭제하기
-
-    return dic
-
-
 #pip install --upgrade pip
 #pip install --upgrade git+https://github.com/huggingface/transformers.git
 
@@ -241,8 +83,8 @@ gt                   실제 텍스트 파일
 option               0 : 음소   1 : 단어   2 : 문장 / 문단
 
 ##returns
-option : 0,1  -> similarity           단어의 유사도(0 ~ 100)                                         text : 사용자 발음
-option : 2  -> wrong_list_idx         틀린 단어의 인덱스 리스트(gt 기준)   -1 : 틀린 단어가 없음          text_list : 사용자 음절 리스트    gt_list : 실제 음절 리스트
+option : 0  -> similarity           단어의 유사도(0 ~ 100)                                         text : 사용자 발음
+option : 1  -> wrong_list_idx       틀린 단어의 인덱스 리스트(gt 기준)   -1 : 틀린 단어가 없음     text_list : 사용자 음절 리스트    gt_list : 실제 음절 리스트
 '''
 def find_wrong_index(user_text, gt, option = 0):
 
@@ -388,11 +230,9 @@ text : 사용자의 텍스트
 option : 0 : 문장 1 : 문단
 
 ##returns
-0 : 매우 느림
-0.5 : 느림
-1 : 적당함
-1.5 : 빠름
-2 : 매우 빠름
+0 : 속도가 적당함
+1 : 속도가 느림
+-1 : 속도가 빠름
 '''
 def compare_speed(user_timestamp, text, option = 0):
 
@@ -401,7 +241,7 @@ def compare_speed(user_timestamp, text, option = 0):
     length = len(user_timestamp['text'])
     user_speed = timestamp[1]/length
     print(user_speed)
-    return check_speed(user_speed)
+    return check_speed(user_speed)#0 : 적당  1 : 느림   -1 : 빠름
 
   elif(option == 1):
     num_text = len(user_timestamp['chunks'])
@@ -450,6 +290,27 @@ def check_speed(user_speed):
 
   return result
 ######################################################################################################################################################################
+#pip install ffmpeg
+#pip install pydub
+#pip install liborsa
+'''
+ aac to mp3 변환 함수
+
+ ##params
+ aac_file :     aac 파일 경로
+ file_name :    저장할 파일 이름
+ export_path :  저장 위치
+
+ ##returns
+해당 경로에 파일 생성
+'''
+from pydub import AudioSegment
+
+def aac_to_mp3(aac_file_path, file_name, export_path):
+  aac_audio = AudioSegment.from_file(aac_file_path, format="aac")
+  aac_audio.export("{}/{}.mp3".format(export_path, file_name), format="mp3")
+
+######################################################################################################################################################################
 import librosa
 import librosa.display
 import numpy as np
@@ -497,26 +358,3 @@ def calculate_audio_maxdB_and_var(audio_path):
 
   return result_dB, result_var
 ######################################################################################################################################################################
-import os
-'''
- aac to mp3 변환 함수
-
- ##params
- file :             aac 파일 경로
- file_name :        저장할 파일 이름
- export_path :      저장 위치
-
- ##returns
- 해당 경로에 파일 생성
-'''
-def aac_to_mp3(file: UploadFile, file_name, export_path):
-
-    # 업로드된 파일을 저장
-    basic_path = os.path.dirname(os.path.abspath(__file__))
-    upload_file_path = os.path.join(basic_path, file.filename)
-    with open(upload_file_path, "wb") as f:
-        f.write(file.file.read())
-
-    # acc파일을 AudioSegment 객체 이용해서 mp3파일로 변환
-    audio = AudioSegment.from_file(upload_file_path, format="aac")
-    audio.export("{}/{}.mp3".format(export_path, file_name), format="mp3")
