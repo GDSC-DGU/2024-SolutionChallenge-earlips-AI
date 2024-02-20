@@ -1,12 +1,14 @@
-## 2024 SolutionChallenge - earlips (AI part)
+# 2024 SolutionChallenge - earlips (AI part)
 
 GDSC DGU로서 SolutionChallenge에 참여하는 Earlips의 AI팀입니다.
 
-### 💻 프로젝트 소개
+## 💻 프로젝트 소개
+
+--
 
 많은 청각장애인분들이 겪는 언어 구사의 어려움을 돕기 위해 만든 '발음 교정' 애플리케이션입니다.
 
-### 🕰️ 개발 기간
+## 🕰️ 개발 기간
 
 * 2023.12.8 ~ 2024.2.22
 
@@ -32,7 +34,7 @@ GDSC DGU로서 SolutionChallenge에 참여하는 Earlips의 AI팀입니다.
 
 * 발표 준비
  
-### 👥 개발자 소개
+## 🧑‍💻 개발자 소개
 
 * __이선호__ : 팀장, AI 개발자, Server 개발자
 
@@ -40,12 +42,10 @@ GDSC DGU로서 SolutionChallenge에 참여하는 Earlips의 AI팀입니다.
 
 * __임은서__ : Server 개발자
 
-* __황현정__ : Front 개발
+* __황현정__ : Front 개발자
 
-### 🔎 개발 환경
+## 🔎 개발 환경
 
+## 📌 주요 기능
 
-
-### 📌 주요 기능
-
-### : 코드 실행 방법
+## ⌨️ 코드 실행 방법
