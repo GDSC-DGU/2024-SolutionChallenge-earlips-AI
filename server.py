@@ -6,7 +6,11 @@ import aac_to_mp3
 import audio_to_text
 import similarity_wrong
 import loudness
+<<<<<<< HEAD
 import speed
+=======
+import cal_speed
+>>>>>>> 3600c91 (new version of main)
 import to_sentence
 
 # 서버
@@ -92,7 +96,11 @@ async def sentence(audio : Annotated[UploadFile, Form()], content : Annotated[st
     # 틀린 단어 인덱스 찾기
     wrong_list_idx, user_word_list, gt_word_list = similarity_wrong.find_wrong_index(result, sen, option=2)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 실제 단어 리스트
     db, var = loudness.calculate_audio_maxdB_and_var(audio_path) # 목소리 크기 (0~100), var (1 or -1)
+<<<<<<< HEAD
     speed = speed.compare_speed(result, sen, option = 0) # speed (0, 0.5, 1, 1.5, 2)
+=======
+    speed = cal_speed.compare_speed(result, sen, option = 0) # speed (0, 0.5, 1, 1.5, 2)
+>>>>>>> 3600c91 (new version of main)
 
     dic = {"sentence_word" : gt_word_list, "user_word" : user_word_list, "wrong" : wrong_list_idx, "loudness" : db, "variance" : var, "speed" : speed}
 
@@ -127,7 +135,11 @@ async def paragraph(audio : Annotated[UploadFile, Form()], content : Annotated[s
     wrong_list_idx, user_word_list, gt_word_list = similarity_wrong.find_wrong_index(result, para, option = 2)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 실제 단어 리스트
     paragraph_sentence = to_sentence.paragraph_to_sentence_list2(para)
     user_sentence = to_sentence.paragraph_to_sentence_list(result)
+<<<<<<< HEAD
     speed = speed.compare_speed(result, para, option = 1)
+=======
+    speed = cal_speed.compare_speed(result, para, option = 1)
+>>>>>>> 3600c91 (new version of main)
 
     dic = {"paragraph_word": gt_word_list, "user_word": user_word_list, "paragraph_sentence": paragraph_sentence, "user_sentence": user_sentence, "wrong": wrong_list_idx, "speed": speed}
 
@@ -164,12 +176,20 @@ async def script(audio : Annotated[UploadFile, Form()], content : Annotated[str,
     # 문단일 경우
     if(num_user_sentence_list > 0 and num_paragraph_sentence_list > 0):
         wrong_list_idx, user_word_list, gt_word_list = similarity_wrong.find_wrong_index(result, scr, option=2)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 실제 단어 리스트
+<<<<<<< HEAD
         speed = speed.compare_speed(result, scr, option=1)
+=======
+        speed = cal_speed.compare_speed(result, scr, option=1)
+>>>>>>> 3600c91 (new version of main)
 
     # 문장일 경우
     else:
         wrong_list_idx, user_word_list, gt_word_list = similarity_wrong.find_wrong_index(result, scr, option=1)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 실제 단어 리스트
+<<<<<<< HEAD
         speed = speed.compare_speed(result, scr, option=0)
+=======
+        speed = cal_speed.compare_speed(result, scr, option=0)
+>>>>>>> 3600c91 (new version of main)
         
     dic = {"paragraph_word": gt_word_list, "user_word": user_word_list, "paragraph_sentence": paragraph_sentence, "user_sentence": user_sentence, "wrong": wrong_list_idx, "speed": speed}
 

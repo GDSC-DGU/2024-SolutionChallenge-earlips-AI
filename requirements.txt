@@ -1,5 +1,6 @@
 python >= 3.9
 
+<<<<<<< HEAD
 !pip install fastapi
 !pip install pydub
 !pip install numpy
@@ -10,3 +11,16 @@ python >= 3.9
 !pip install python-multipart 
 !pip install --upgrade pip
 !pip install --upgrade git+https://github.com/huggingface/transformers.git
+=======
+pip install numpy
+pip install librosa
+pip install jamo
+pip install torch
+pip install --upgrade pip
+pip install --upgrade git+https://github.com/huggingface/transformers.git
+pip install fastapi
+pip install pydub
+pip install python-multipart 
+pip install accelerate
+pip install uvicorn
+>>>>>>> 3600c91 (new version of main)
