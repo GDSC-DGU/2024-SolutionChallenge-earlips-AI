@@ -36,7 +36,6 @@ def find_wrong_index(user_text, gt, option = 0):
       if(similarity < 0):
         similarity = 0
         
-
       return similarity, text
 
     #단어일 경우

@@ -129,7 +129,6 @@ async def paragraph(audio : Annotated[UploadFile, Form()], content : Annotated[s
     user_sentence = to_sentence.paragraph_to_sentence_list(result)
     speed = cal_speed.compare_speed(result, para, option = 1)
 
-
     dic = {"paragraph_word": gt_word_list, "user_word": user_word_list, "paragraph_sentence": paragraph_sentence, "user_sentence": user_sentence, "wrong": wrong_list_idx, "speed": speed}
 
     # 오디오 삭제
@@ -167,12 +166,10 @@ async def script(audio : Annotated[UploadFile, Form()], content : Annotated[str,
         wrong_list_idx, user_word_list, gt_word_list = similarity_wrong.find_wrong_index(result, scr, option=2)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 실제 단어 리스트
         speed = cal_speed.compare_speed(result, scr, option=1)
 
-
     # 문장일 경우
     else:
         wrong_list_idx, user_word_list, gt_word_list = similarity_wrong.find_wrong_index(result, scr, option=1)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 실제 단어 리스트
         speed = cal_speed.compare_speed(result, scr, option=0)
-
         
     dic = {"paragraph_word": gt_word_list, "user_word": user_word_list, "paragraph_sentence": paragraph_sentence, "user_sentence": user_sentence, "wrong": wrong_list_idx, "speed": speed}
 
@@ -201,3 +198,42 @@ async def script(audio : Annotated[UploadFile, Form()]):
     os.remove(audio_path)
 
     return dic
+
+@app.post("/english/script")
+async def script_english(audio : Annotated[UploadFile, Form()], content : Annotated[str, Form()]):
+    
+    scr = content
+    file = audio
+
+    # aac파일을 mp3파일로 변환
+    audio_path = aac_to_mp3.aac_to_mp3(file)
+    audio_path = audio_path + ".mp3"
+
+    # 모델에 적용
+    result = audio_to_text.speech_to_text_english(audio_path)
+    
+    user_sentence = to_sentence.paragraph_to_sentence_list2(result, 1)
+    paragraph_sentence = to_sentence.paragraph_to_sentence_list2(scr)
+    
+    num_user_sentence_list = len(user_sentence)
+    num_paragraph_sentence_list = len(paragraph_sentence)
+
+    wrong_list_idx = [] 
+    user_word_list = []
+    gt_word_list = []
+
+    # 문단일 경우
+    if(num_user_sentence_list > 0 and num_paragraph_sentence_list > 0):
+        wrong_list_idx, user_word_list, gt_word_list = similarity_wrong.find_wrong_index(result, scr, option=2)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 실제 단어 리스트
+
+    # 문장일 경우
+    else:
+        wrong_list_idx, user_word_list, gt_word_list = similarity_wrong.find_wrong_index(result, scr, option=1)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 실제 단어 리스트
+        
+    dic = {"paragraph_word": gt_word_list, "user_word": user_word_list, "paragraph_sentence": paragraph_sentence, "user_sentence": user_sentence, "wrong": wrong_list_idx}
+
+    # 오디오 삭제
+    os.remove(audio_path)
+
+    return dic
+

@@ -20,12 +20,20 @@ def paragraph_to_sentence_list(user_text):
   return sentences
 
 #실제 정답 text용
-def paragraph_to_sentence_list2(user_text):
+def paragraph_to_sentence_list2(user_text, option = 0):
 
-  user_text = user_text.replace("?","@")
-  user_text = user_text.replace("!","@")
-  user_text = user_text.replace(".","@")
-  sentences = user_text.split(sep="@")
+  if(option == 0):
+    user_text = user_text.replace("?","@")
+    user_text = user_text.replace("!","@")
+    user_text = user_text.replace(".","@")
+    sentences = user_text.split(sep="@")
+
+  #영어 할 때 사용하려고 만들어 놓음
+  else:
+    text = user_text['text'].replace("?","@")
+    text = user_text['text'].replace("!","@")
+    text = user_text['text'].replace(".","@")
+    sentences = text.split(sep="@")
 
   if("" in sentences):
     sentences.remove("")

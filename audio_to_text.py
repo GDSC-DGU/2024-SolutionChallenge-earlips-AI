@@ -47,5 +47,9 @@ text :       음성 파일을 텍스트로 변환한 결과
 '''
 
 def speech_to_text(audio_path):
-  result = pipe(audio_path, return_timestamps = True ,generate_kwargs={"language" : "korean"})
-  return result
+    result = pipe(audio_path, return_timestamps = True ,generate_kwargs={"language" : "korean"})
+    return result
+
+def speech_to_text_english(audio_path):
+    result = pipe(audio_path, return_timestamps = True ,generate_kwargs={"language" : "english"})
+    return result
