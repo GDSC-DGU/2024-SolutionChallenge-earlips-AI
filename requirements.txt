@@ -1,0 +1,12 @@
+python >= 3.9
+
+!pip install fastapi
+!pip install pydub
+!pip install numpy
+!pip install librosa
+!pip install jamo
+!pip install torch
+!pip install accelerate
+!pip install python-multipart 
+!pip install --upgrade pip
+!pip install --upgrade git+https://github.com/huggingface/transformers.git
