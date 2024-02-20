@@ -44,14 +44,57 @@ GDSC DGU로서 SolutionChallenge에 참여하는 Earlips의 AI팀입니다.
 
 ## 🔎 기술 스택
 
-* openai/whisper-large-v3 (Hugging Face)
+* AI
 
-* FastAPI
+  * openai/whisper-large-v3 (Hugging Face)
 
-* Google Cloud
+* Front
+
+  * Flutter
+
+  * Dart
+
+* Back
+
+  * FastAPI
+
+  * Google Cloud
+ 
+  * Firebase
+ 
+  * Python
 
 ## 📌 구현 기능
 
-* 
+* 로그인
+
+* 마이페이지
+
+  * 시스템 언어
+
+  * 학습 언어
+ 
+  * 
+
+* 홈
+
+  * 말하기 능력 점수
+
+  * 학습의 진행률
+ 
+  * 대본으로 학습
+ 
+  * 실시간으로 발음 테스트
+
+* 학습 페이지
+
+  * 음절 단위로 발음 교정
+
+  * 단어로 발음 교정
+
+  * 문장으로 발음 교정
+
+  * 문단으로 발음 교정
+
 
 ## ⌨️ 코드 실행 방법
