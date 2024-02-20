@@ -30,15 +30,13 @@ def find_wrong_index(user_text, gt, option = 0):
       else:
         similarity = calculate_similarity(gt, text)
 
-<<<<<<< HEAD
-=======
       if(similarity > 100):
         similarity = 100
 
       if(similarity < 0):
         similarity = 0
         
->>>>>>> 3600c91 (new version of main)
+
       return similarity, text
 
     #단어일 경우
@@ -51,15 +49,12 @@ def find_wrong_index(user_text, gt, option = 0):
       else:
         similarity = calculate_similarity(gt, text, 1)
 
-<<<<<<< HEAD
-=======
       if(similarity > 100):
         similarity = 100
       
       if(similarity < 0):
         similarity = 0
 
->>>>>>> 3600c91 (new version of main)
       return similarity, text
 
     #문장일 경우(두 단어 이상)
