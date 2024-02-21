@@ -37,11 +37,11 @@
 ---
 
 ## 1. Project Name
-2024 Solution Challenge
+The name is earlips.
 
 ## 2. Introduce Project
 The mission of the Solution Challenge is to solve for one or more of the United Nations' 17 Sustainable Development Goals using Google technology.
-
+We provide pronunciation and speech learning services for individuals with hearing impairments.
 ## 3. Project Structure
 
 
