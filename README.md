@@ -1,4 +1,4 @@
-# Opensource 
+# OpenSource 
 * openai/whisper-large-v3 (Hugging Face)
 # Setting Up a Virtual Machine Instance
 * Create a Virtual Machine instance with one GPU T4 and 3 cores, equipped with 15.8GB of memory. In my case, I used Google Cloud Platform.
