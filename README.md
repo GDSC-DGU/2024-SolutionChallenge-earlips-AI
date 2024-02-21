@@ -1,60 +1,63 @@
-# 2024 SolutionChallenge - earlips (AI part)
+# 2024 SolutionChallenge - Earlips (AI part)
 
-GDSC DGU로서 SolutionChallenge에 참여하는 Earlips의 AI팀입니다.
+This is Earlips' AI team participating in the Solution Challenge as a GDSC DGU.
 
-## 💻 프로젝트 소개
+## 💻 Project Introduction
 
-많은 청각장애인분들이 겪는 언어 구사의 어려움을 돕기 위해 만든 '발음 교정' 애플리케이션입니다.
+This is a ‘pronunciation correction’ application created to help with language difficulties experienced by many hearing-impaired people.
 
-## 🕰️ 개발 기간
+## 🕰️ Develop Period
 
 * 2023.12.8 ~ 2024.2.22
 
-* 아이디어 구상
+* Think of ideas
 
-* 주제 확정
+* Determine topic
 
-* 아이디어 구체화
+* Materialize idea
 
-* 플로우 차트 그리기
+* Draw a flow chart
 
-* 와이어 프레임 그리기
+* Draw wireframes
 
-* 기능 확정
+* Determine Function
 
-* 필요한 기술 확정
+* Determine required skills
 
-* 역할 분담
+* Distribute roles
 
-* 개발
+* Development
 
-* 배포
+* Distribution
 
-* 발표 준비
+* Prepare for presentation
  
-## 🧑‍💻 개발자 소개
+## 🧑‍💻 Developer Introduction
 
-* __이선호__ : 팀장, AI 개발자, Server 개발자
+* __Seonho Lee (core member)__ : Team Leader, AI Developer, Server Developer
 
-* __서희찬__ : Front 개발자
+* __Heechan Seo__ : Front Developer
 
-* __임은서__ : Server 개발자
+* __Eunseo Lim__ : Server Developer
 
-* __황현정__ : Front 개발자
+* __Hyunjeong Hwang__ : Front Developer
 
-## 🔎 기술 스택
+## 🔎 Technology Stack
 
-* AI
+<img src="https://github.com/GDSC-DGU/2024-SolutionChallenge-earlips-AI/assets/121742311/4a4ca8cf-8233-4e11-950b-18be72378ca5" width="20" height="20"></img>
+ AI
 
-  * openai/whisper-large-v3 (Hugging Face)
+* openai/whisper-large-v3 (Hugging Face)
 
-* Front
+<img src="https://github.com/GDSC-DGU/2024-SolutionChallenge-earlips-AI/assets/121742311/06f321a8-672b-4e93-ad15-f454e25978b2" width="20" height="20"></img>
+ Front
 
-  * Flutter
+* Flutter
 
-  * Dart
+* Dart
 
-* Back
+<img src="https://github.com/GDSC-DGU/2024-SolutionChallenge-earlips-AI/assets/121742311/41092854-f831-41bd-bb68-e81aa610913c" width="20" height="20"> 
+ Back
 
   * FastAPI
 
@@ -64,37 +67,37 @@ GDSC DGU로서 SolutionChallenge에 참여하는 Earlips의 AI팀입니다.
  
   * Python
 
-## 📌 구현 기능
+## 📌 Implementation Function
 
-* 로그인
+* Login
 
-* 마이페이지
+* My page
 
-  * 시스템 언어
+  * System language
 
-  * 학습 언어
+  * Learing language
  
   * 
 
-* 홈
+* Home
 
-  * 말하기 능력 점수
+  * Speaking ability score
 
-  * 학습의 진행률
+  * Progress of learning
  
-  * 대본으로 학습
+  * Learning from script
  
-  * 실시간으로 발음 테스트
+  * Test pronunciation in real time
 
-* 학습 페이지
+* Learning page
 
-  * 음절 단위로 발음 교정
+  * Pronunciation correction by syllable
 
-  * 단어로 발음 교정
+  * Pronunciation correction with words
 
-  * 문장으로 발음 교정
+  * Pronunciation correction in sentences
 
-  * 문단으로 발음 교정
+  * Correct your pronunciation in paragraphs
 
 
 ## ⌨️ 코드 실행 방법
