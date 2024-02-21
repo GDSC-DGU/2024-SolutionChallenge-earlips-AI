@@ -5,7 +5,7 @@
 * Machine Type: n1-standard-4
 * GPU: 1 x NVIDIA Tesla T4 
 * Cores: 2
-* Memory: 15.8GB
+* Memory: 15GB
 * Operating System: Deep Learning on Linux
 * OS version: Deep Learning VM with CUDA 11.8 M116 : Debian 11, Python 3.10. With CUDA 11.8 preinstalled.
 # Git File Upload Server
