@@ -21,6 +21,7 @@ pip install -r requirements.txt
 ```
 * In my case, I installed only "my_install_package.txt"
 # Running the Server
+* Make sure to replace x.x.x.x with the desired host IP address and x with the preferred port number.
 * Execute the following command to run the server:
 ```console
 uvicorn server:app --reload --host=x.x.x.x --port=x
@@ -29,4 +30,4 @@ uvicorn server:app --reload --host=x.x.x.x --port=x
 ```console
 conda install ffmpeg
 ```
-* Make sure to replace x.x.x.x with the desired host IP address and x with the preferred port number.
+
