@@ -131,17 +131,17 @@ def calculate_similarity(gt, user, option = 0):
     if(len_sep_gt==len_sep_user):
       for i in range(len_sep_gt):
         if(sep_gt[i]==sep_user[i]):
-          similarity += 33
+          similarity += 45
 
     elif(len_sep_gt>len_sep_user):
       for i in range(len_sep_user):
         if(sep_gt[i]==sep_user[i]):
-          similarity += 33
+          similarity += 45
 
     else:
       for i in range(len_sep_gt):
         if(sep_gt[i]==sep_user[i]):
-          similarity += 33
+          similarity += 45
 
     if(option == 1):
       len_gt = len(gt)
