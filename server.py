@@ -27,6 +27,11 @@ async def syllable(audio : Annotated[UploadFile, Form()], content : Annotated[st
 
     # aac파일을 mp3파일로 변환
     audio_path = aac_to_mp3.aac_to_mp3(file)
+
+    #예외처리 깨진 파일일 경우
+    if(type(audio_path) is HTTPException):
+        return audio_path
+    
     audio_path = audio_path + ".mp3"
 
     # 모델 적용
@@ -52,6 +57,11 @@ async def word(audio : Annotated[UploadFile, Form()], content : Annotated[str, F
 
     # aac파일을 mp3파일로 변환
     audio_path = aac_to_mp3.aac_to_mp3(file)
+
+    #예외처리 깨진 파일일 경우
+    if(type(audio_path) is HTTPException):
+        return audio_path
+    
     audio_path = audio_path + ".mp3"
 
     # 모델에 적용
@@ -77,6 +87,11 @@ async def sentence(audio : Annotated[UploadFile, Form()], content : Annotated[st
 
     # aac파일을 mp3파일로 변환
     audio_path = aac_to_mp3.aac_to_mp3(file)
+
+    #예외처리 깨진 파일일 경우
+    if(type(audio_path) is HTTPException):
+        return audio_path
+    
     audio_path = audio_path + ".mp3"
 
     # 모델에 적용
@@ -111,6 +126,11 @@ async def paragraph(audio : Annotated[UploadFile, Form()], content : Annotated[s
 
     # aac파일을 mp3파일로 변환
     audio_path = aac_to_mp3.aac_to_mp3(file)
+
+    #예외처리 깨진 파일일 경우
+    if(type(audio_path) is HTTPException):
+        return audio_path
+    
     audio_path = audio_path + ".mp3"
 
     # 모델에 적용
@@ -146,6 +166,11 @@ async def script(audio : Annotated[UploadFile, Form()], content : Annotated[str,
 
     # aac파일을 mp3파일로 변환
     audio_path = aac_to_mp3.aac_to_mp3(file)
+
+    #예외처리 깨진 파일일 경우
+    if(type(audio_path) is HTTPException):
+        return audio_path
+    
     audio_path = audio_path + ".mp3"
 
     # 모델에 적용
@@ -187,6 +212,11 @@ async def script(audio : Annotated[UploadFile, Form()]):
 
     # aac파일을 mp3파일로 변환
     audio_path = aac_to_mp3.aac_to_mp3(file)
+
+    #예외처리 깨진 파일일 경우
+    if(type(audio_path) is HTTPException):
+        return audio_path
+    
     audio_path = audio_path + ".mp3"
 
     # 모델에 적용
@@ -207,6 +237,11 @@ async def script_english(audio : Annotated[UploadFile, Form()], content : Annota
 
     # aac파일을 mp3파일로 변환
     audio_path = aac_to_mp3.aac_to_mp3(file)
+
+    #예외처리 깨진 파일일 경우
+    if(type(audio_path) is HTTPException):
+        return audio_path
+    
     audio_path = audio_path + ".mp3"
 
     # 모델에 적용
