@@ -42,19 +42,17 @@ The name is earlips.
 ## 2. Introduce Project
 The mission of the Solution Challenge is to solve for one or more of the United Nations' 17 Sustainable Development Goals using Google technology.
 We provide pronunciation and speech learning services for individuals with hearing impairments.
-## 3. Project Structure
 
-
-## 4. Demonstration vedio and drive screens
+## 3. Demonstration vedio and drive screens
 
 ### 💻 Demonstration vedio
 https://youtu.be/DLwqB820kL8
 ### ✨ Screen
 
-## 5. Overall server structure
+## 4. Overall server structure
 ![image](https://github.com/GDSC-DGU/2024-SolutionChallenge-earlips-AI/assets/88440875/864bc8ec-3c14-45a1-b6db-d31ae0f42a51)
 
-## 6. Running
+## 5. Running
 ### Setting Up a Virtual Machine Instance
 * Create a Virtual Machine instance with one GPU T4 and 2 cores, equipped with 15GB of memory. In my case, I used Google Cloud Platform.
 * Machine Type: n1-standard-4
@@ -86,5 +84,5 @@ uvicorn server:app --reload --host=x.x.x.x --port=x
 conda install ffmpeg
 ```
 ---
-## 7. OpenSource 
+## 6. OpenSource 
 * AI : openai/whisper-large-v3 (Hugging Face)
