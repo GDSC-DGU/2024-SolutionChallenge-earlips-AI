@@ -52,12 +52,9 @@ We provide pronunciation and speech learning services for individuals with heari
 ### ✨ Screen
 
 ## 5. Overall server structure
+![image](https://github.com/GDSC-DGU/2024-SolutionChallenge-earlips-AI/assets/88440875/864bc8ec-3c14-45a1-b6db-d31ae0f42a51)
 
-
-## 6. Detail server structure
-
-
-## 7. Running
+## 6. Running
 ### Setting Up a Virtual Machine Instance
 * Create a Virtual Machine instance with one GPU T4 and 2 cores, equipped with 15GB of memory. In my case, I used Google Cloud Platform.
 * Machine Type: n1-standard-4
@@ -89,5 +86,5 @@ uvicorn server:app --reload --host=x.x.x.x --port=x
 conda install ffmpeg
 ```
 ---
-## 8. OpenSource 
+## 7. OpenSource 
 * AI : openai/whisper-large-v3 (Hugging Face)
