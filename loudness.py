@@ -1,5 +1,3 @@
-# pip install librosa
-# pip install numpy
 import librosa
 import librosa.display
 import numpy as np
