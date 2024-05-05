@@ -86,4 +86,4 @@ conda install ffmpeg
 ## 6. OpenSource 
 * AI : openai/whisper-large-v3 (Hugging Face)
 ## 7. Generative AI
-* AI : Gemini api
+* AI : Gemini - We implemented a feature that uses Gemini to explain phonetic symbols in text
