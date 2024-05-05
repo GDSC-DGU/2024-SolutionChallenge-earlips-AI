@@ -85,3 +85,5 @@ conda install ffmpeg
 ---
 ## 6. OpenSource 
 * AI : openai/whisper-large-v3 (Hugging Face)
+## 7. Generative AI
+* AI : Gemini api
