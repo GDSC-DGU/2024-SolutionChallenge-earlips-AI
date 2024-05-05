@@ -5,9 +5,11 @@ from typing import Annotated
 import aac_to_mp3
 import audio_to_text
 import similarity_wrong
+import english_word_similarity
 import loudness
 import cal_speed
 import to_sentence
+import vibration
 
 # 서버
 app = FastAPI()
@@ -38,7 +40,7 @@ async def syllable(audio : Annotated[UploadFile, Form()], content : Annotated[st
     result = audio_to_text.speech_to_text(audio_path)
 
     # 유사도 및 발음
-    similarity, user_text = similarity_wrong.find_wrong_index(result, syll, option=0)#유사도, 사용자 발음
+    similarity, user_text = similarity_wrong.find_wrong_index(result, syll, option=0) #유사도, 사용자 발음
 
     dic = {"pronunciation" : user_text, "similarity" : similarity }
 
@@ -97,7 +99,7 @@ async def sentence(audio : Annotated[UploadFile, Form()], content : Annotated[st
     # 모델에 적용
     result = audio_to_text.speech_to_text(audio_path)
 
-    # 예외 처리 (단어 이하가 들어올 경우) # 문단이 아닌 문장일 경우 예외가 발생하는가?
+    # 예외 처리 (단어 이하가 들어올 경우) # 문장이 아닌 단어일 경우 예외가 발생하는가?
     user_text = result['text']
     user_text_list = user_text.split()
     num_user_text_list = len(user_text_list)
@@ -229,6 +231,154 @@ async def script(audio : Annotated[UploadFile, Form()]):
 
     return dic
 
+# 영어 발음 기호 교정
+@app.post("/english/phoneme")
+async def phoneme_english(audio : Annotated[UploadFile, Form()], content : Annotated[str, Form()]):
+
+    phon = content
+    file = audio
+
+    # aac파일을 mp3파일로 변환
+    audio_path = aac_to_mp3.aac_to_mp3(file)
+
+    #예외처리 깨진 파일일 경우
+    if(type(audio_path) is HTTPException):
+        return audio_path
+    
+    audio_path = audio_path + ".mp3"
+
+    # 모델 적용
+    result = audio_to_text.speech_to_text_english(audio_path)
+
+    # 유사도 및 발음
+    similarity, user_text = english_word_similarity.binary_TF_english_phoneme(result, phon) #유사도, 사용자 발음
+
+    dic = {"pronunciation" : user_text, "similarity" : similarity }
+
+    # 오디오 삭제
+    os.remove(audio_path)
+
+    return dic
+
+
+# 영어 단어 교정
+@app.post("/english/word")
+async def word_english(audio : Annotated[UploadFile, Form()], content : Annotated[str, Form()], threshold : Annotated[int, Form()]):
+
+    word = content
+    file = audio
+
+    # aac파일을 mp3파일로 변환
+    audio_path = aac_to_mp3.aac_to_mp3(file)
+
+    #예외처리 깨진 파일일 경우
+    if(type(audio_path) is HTTPException):
+        return audio_path
+    
+    audio_path = audio_path + ".mp3"
+
+    # 모델에 적용
+    result = audio_to_text.speech_to_text_english(audio_path)
+
+    # 유사도 및 발음
+    similarity, user_text = english_word_similarity.english_word_similarity_score(result, word)  # 유사도, 사용자 발음
+
+    #진동
+    time, dbs = vibration.quantize_audio_db(audio_path, threshold=threshold)
+
+    print
+
+    dic = {"pronunciation" : user_text, "similarity" : similarity, "pattern" : time, "intensities" : dbs}
+
+    # 오디오 삭제
+    os.remove(audio_path)
+
+    return dic
+
+
+# 영어 문장 교정
+@app.post("/english/sentence")
+async def sentence_english(audio : Annotated[UploadFile, Form()], content : Annotated[str, Form()], threshold : Annotated[int, Form()]):
+
+    sen = content
+    file = audio
+    sen = sen.lower()
+
+    # aac파일을 mp3파일로 변환
+    audio_path = aac_to_mp3.aac_to_mp3(file)
+
+    #예외처리 깨진 파일일 경우
+    if(type(audio_path) is HTTPException):
+        return audio_path
+    
+    audio_path = audio_path + ".mp3"
+
+    # 모델에 적용
+    result = audio_to_text.speech_to_text_english(audio_path)
+
+    # 예외 처리 (단어 이하가 들어올 경우) # 문장이 아닌 단어일 경우 예외가 발생하는가?
+    user_text = result['text']
+    result['text'] = user_text.lower()
+
+    user_text_list = user_text.split()
+    num_user_text_list = len(user_text_list)
+    if(num_user_text_list <= 1):
+        raise HTTPException(status_code=400, detail="User input should contain more than 1 word.")
+    
+    # 틀린 단어 인덱스 찾기
+    wrong_list_idx, user_word_list, gt_word_list = similarity_wrong.find_wrong_index(result, sen, option=2)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 실제 단어 리스트
+
+    #진동
+    time, dbs = vibration.quantize_audio_db(audio_path, threshold=threshold)
+
+    dic = {"sentence_word" : gt_word_list, "user_word" : user_word_list, "wrong" : wrong_list_idx, "pattern" : time, "intensities" : dbs}
+    
+    os.remove(audio_path)
+
+    return dic
+
+
+# 영어 문단 교정
+@app.post("/english/paragraph")
+async def paragraph_english(audio : Annotated[UploadFile, Form()], content : Annotated[str, Form()]):
+
+    para = content
+    file = audio
+    para = para.lower()
+    # aac파일을 mp3파일로 변환
+    audio_path = aac_to_mp3.aac_to_mp3(file)
+
+    #예외처리 깨진 파일일 경우
+    if(type(audio_path) is HTTPException):
+        return audio_path
+    
+    audio_path = audio_path + ".mp3"
+
+    # 모델에 적용
+    result = audio_to_text.speech_to_text_english(audio_path)
+
+    # 예외 처리 (단어 이하가 들어올 경우) # 문단이 아닌 문장일 경우 예외가 발생하는가?
+    user_text = result['text']
+    result['text'] = user_text.lower()
+    user_text_list = user_text.split()
+    num_user_text_list = len(user_text_list)
+    if(num_user_text_list <= 1):
+        raise HTTPException(status_code=400, detail="User input should contain more than 1 word.")
+
+    # 틀린 단어 인덱스 찾기
+    wrong_list_idx, user_word_list, gt_word_list = similarity_wrong.find_wrong_index(result, para, option = 2)  # 틀린 단어 인덱스 리스트, 사용자 단어 리스트, 실제 단어 리스트
+    user_sentence = to_sentence.paragraph_to_sentence_list(result)
+    paragraph_sentence = to_sentence.paragraph_to_sentence_list2(para)
+
+    dic = {"paragraph_word": gt_word_list, "user_word": user_word_list, "paragraph_sentence": paragraph_sentence, "user_sentence": user_sentence, "wrong": wrong_list_idx}
+
+    # 오디오 삭제
+    os.remove(audio_path)
+
+    return dic
+
+
+# 영어 대본 학습
 @app.post("/english/script")
 async def script_english(audio : Annotated[UploadFile, Form()], content : Annotated[str, Form()]):
     
@@ -272,3 +422,28 @@ async def script_english(audio : Annotated[UploadFile, Form()], content : Annota
 
     return dic
 
+
+# 실시간 영어 발음 테스트
+@app.post("/english/real_time")
+async def script_english(audio : Annotated[UploadFile, Form()]):
+
+    file = audio
+
+    # aac파일을 mp3파일로 변환
+    audio_path = aac_to_mp3.aac_to_mp3(file)
+
+    #예외처리 깨진 파일일 경우
+    if(type(audio_path) is HTTPException):
+        return audio_path
+    
+    audio_path = audio_path + ".mp3"
+
+    # 모델에 적용
+    result = audio_to_text.speech_to_text_english(audio_path)
+
+    dic = {"user_total" : result['text']}
+
+    # 오디오 삭제
+    os.remove(audio_path)
+
+    return dic
