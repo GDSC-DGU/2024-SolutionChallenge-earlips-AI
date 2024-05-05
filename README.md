@@ -46,7 +46,7 @@ We provide pronunciation and speech learning services for individuals with heari
 ## 3. Demonstration vedio and drive screens
 
 ### 💻 Demonstration vedio
-https://youtu.be/DLwqB820kL8
+https://youtu.be/AKpShUiXPnk
 
 ## 4. Overall server structure
 ![image](https://github.com/GDSC-DGU/2024-SolutionChallenge-earlips-AI/assets/88440875/864bc8ec-3c14-45a1-b6db-d31ae0f42a51)
