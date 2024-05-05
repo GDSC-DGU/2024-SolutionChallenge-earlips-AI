@@ -7,8 +7,6 @@
 
 ## [Back-End & AI](/2024-SolutionChallenge-earlips-AI/README.md)
 
-### 👋 Introduce team member
-
 | name                                        |major        |GDSC  | Email                |
 | -------------------------------------------- | -------------- | ------ | -------------------- |
 | [HUICHAN SEO](https://github.com/seochan99)       | Computer Science | LEAD | gmlcks0513@dgu.ac.kr |
